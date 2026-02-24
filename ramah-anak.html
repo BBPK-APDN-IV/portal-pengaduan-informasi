@@ -81,18 +81,68 @@
   .fac-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .fac-item { background: #f8fafc; padding: 10px; border-radius: 8px; font-size: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600; color: #475569; }
 
-  /* 4. TOMBOL LOKASI */
-  .btn-map {
-    background: #205E6C; color: white; text-decoration: none;
-    padding: 15px; border-radius: 16px; margin-bottom: 35px;
-    display: flex; flex-direction: column; 
-    align-items: center; justify-content: center; gap: 4px;
-    box-shadow: 0 4px 10px rgba(32, 94, 108, 0.2);
-    transition: transform 0.2s;
+  /* 4. TOMBOL LOKASI (WARNA BOLD MODERN) */
+  .btn-map-modern {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #2A7A8C 0%, #164652 100%); /* Gradasi biru gelap tema Anda */
+    padding: 16px 20px;
+    border-radius: 16px;
+    margin-bottom: 35px;
+    text-decoration: none;
+    color: #ffffff;
+    box-shadow: 0 6px 15px rgba(32, 94, 108, 0.25);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .btn-map:hover { background: #1a4f5b; transform: translateY(-2px); }
-  .map-title { font-weight: 800; font-size: 14px; display: flex; align-items: center; gap: 8px; }
-  .map-sub { font-size: 11px; opacity: 0.8; font-weight: 400; }
+
+  .btn-map-modern:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(32, 94, 108, 0.4);
+    background: linear-gradient(135deg, #2E879B 0%, #113640 100%);
+  }
+
+  .map-info-modern {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .map-title-modern {
+    font-weight: 800;
+    font-size: 16px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .map-sub-modern {
+    font-size: 12px;
+    color: #e2e8f0;
+    font-weight: 400;
+    opacity: 0.9;
+  }
+
+  .map-action-icon {
+    background: rgba(255, 255, 255, 0.2); /* Efek kaca transparan */
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s;
+  }
+
+  /* Saat di-hover, ikon panah berubah jadi putih, panahnya biru */
+  .btn-map-modern:hover .map-action-icon {
+    background: #ffffff;
+    color: #205E6C;
+  }
 
   /* 5. FORMULIR PENITIPAN ANAK (DI BAWAH) */
   .ticket-form-card {
@@ -205,9 +255,16 @@
     </div>
   </div>
 
-  <a href="https://maps.app.goo.gl/JDUhWyHAEHc8vDc76" target="_blank" class="btn-map">
-    <div class="map-title">📍 Cek Lokasi Ruangan</div>
-    <div class="map-sub">(Berada di sebelah Kantin Gedung H)</div>
+<a href="https://maps.app.goo.gl/JDUhWyHAEHc8vDc76" target="_blank" class="btn-map-modern">
+    <div class="map-info-modern">
+      <div class="map-title-modern">
+        <span style="font-size: 18px;">📍</span> Cek Lokasi via Maps
+      </div>
+      <div class="map-sub-modern">Ruang Ramah Anak/Daycare Berada Sebelah Gedung H</div>
+    </div>
+    <div class="map-action-icon">
+      <span>➔</span>
+    </div>
   </a>
 
   <div class="ticket-form-card" id="form-reservasi">
@@ -303,6 +360,7 @@
 
 </body>
 </html>
+
 
 
 
