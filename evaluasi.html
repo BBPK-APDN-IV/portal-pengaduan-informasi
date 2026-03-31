@@ -15,30 +15,58 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   /* DASAR & ANIMASI */
-  html, body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; }
+  html, body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; overflow-x: hidden;}
   @keyframes fadeMasuk { from { opacity: 0; transform: translateY(40px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
-  .container { max-width: 480px; margin: 20px auto; padding: 25px 20px; background: #ffffff; border-radius: 24px; box-shadow: 0 10px 30px rgba(32, 94, 108, 0.1); opacity: 0; animation: fadeMasuk 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; box-sizing: border-box; }
+  
+  .container { max-width: 480px; margin: 20px auto; padding: 25px 20px; background: #ffffff; border-radius: 24px; box-shadow: 0 10px 30px rgba(32, 94, 108, 0.1); opacity: 0; animation: fadeMasuk 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; box-sizing: border-box; position: relative;}
+  
   @media (max-width: 480px) { .container { margin: 15px; border-radius: 16px; padding: 20px 15px; } }
 
-  /* --- TOMBOL KEMBALI --- */
-  .btn-back {
+  /* --- TOMBOL KEMBALI & HEADER --- */
+  .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+  
+  .btn-back, .btn-back-menu {
     display: inline-flex; align-items: center; gap: 8px;
     background-color: #ffffff; color: #205E6C; border: 1px solid #205E6C;
-    padding: 8px 20px; border-radius: 50px; text-decoration: none;
-    font-size: 13px; font-weight: 700;
+    padding: 8px 16px; border-radius: 50px; text-decoration: none;
+    font-size: 12px; font-weight: 700;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: all 0.2s ease; margin-bottom: 25px; 
+    transition: all 0.2s ease; cursor: pointer;
   }
-  .btn-back:hover { background-color: #205E6C; color: #ffffff; }
+  .btn-back:hover, .btn-back-menu:hover { background-color: #205E6C; color: #ffffff; }
 
-  /* HEADER STANDAR LAYANAN (WARNA TEAL BBPK) */
   .page-header { background: linear-gradient(135deg, #205E6C 0%, #113a43 100%); color: white; padding: 25px 20px; border-radius: 16px; text-align: center; margin-bottom: 25px; box-shadow: 0 6px 15px rgba(32, 94, 108, 0.2); }
-  .page-header h1 { margin: 0 0 5px 0; font-size: 22px; font-weight: 800; }
-  .page-header p { margin: 0; font-size: 13px; opacity: 0.9; }
+  .page-header h1 { margin: 0 0 5px 0; font-size: 20px; font-weight: 800; }
+  .page-header p { margin: 0; font-size: 12px; opacity: 0.9; }
 
-  /* FORM GROUPING (A, B, C, D) */
+  /* --- GAYA MENU CARDS (TAMPILAN AWAL) --- */
+  #evaluasi-menu { display: flex; flex-direction: column; gap: 16px; margin-bottom: 20px; }
+  
+  .menu-card {
+    background: #ffffff; border: 2px solid #e2e8f0; border-radius: 16px;
+    padding: 20px; display: flex; align-items: center; gap: 15px;
+    cursor: pointer; transition: all 0.3s ease; text-align: left;
+  }
+  .menu-card:hover {
+    border-color: #205E6C; transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(32, 94, 108, 0.1);
+  }
+  .menu-card-icon {
+    font-size: 28px; color: #205E6C; background-color: rgba(32, 94, 108, 0.1);
+    width: 60px; height: 60px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .menu-card-content { flex-grow: 1; }
+  .menu-card-title { font-weight: 700; color: #205E6C; font-size: 15px; display: block; margin-bottom: 2px;}
+  .menu-card-desc { font-size: 12px; color: #64748b; display: block; line-height: 1.4; }
+  .menu-card-arrow { color: #cbd5e1; font-size: 18px; }
+  .menu-card:hover .menu-card-arrow { color: #205E6C; transform: translateX(3px); transition: transform 0.2s; }
+
+  /* --- GAYA FORM (DISEMBUNYIKAN AWALNYA) --- */
+  .form-evaluasi { display: none; } /* Default sembunyi */
+  
   .form-section { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; margin-bottom: 20px; }
-  .section-title { font-size: 15px; font-weight: 700; color: #205E6C; margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+  .section-title { font-size: 15px; font-weight: 700; color: #205E6C; margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; display: flex; align-items: center; gap: 8px;}
   
   .form-group { margin-bottom: 15px; text-align: left; }
   .form-group label { display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px; }
@@ -60,19 +88,49 @@
 
 <div class="container">
   
-  <div style="text-align: left;">
-    <a href="index.html" class="btn-back">
+  <div class="top-bar">
+    <a href="index.html" class="btn-back" id="back-to-main">
       <span>❮</span> Menu Utama
     </a>
+    <button class="btn-back-menu" id="back-to-menu" style="display: none;" onclick="tampilkanMenu()">
+      <span>❮</span> Pilih Evaluasi
+    </button>
   </div>
 
   <div class="page-header">
-    <h1>Survey & Evaluasi</h1>
-    <p>Bantu kami meningkatkan kualitas layanan BBPK-APDN IV</p>
+    <h1 id="header-title">Survey & Evaluasi</h1>
+    <p id="header-desc">Bantu kami meningkatkan kualitas layanan BBPK-APDN IV</p>
   </div>
 
-  <form id="formEvaluasi">
+  <div id="evaluasi-menu">
     
+    <div class="menu-card" onclick="bukaForm('diklat')">
+      <div class="menu-card-icon">
+        <i class="fa-solid fa-chalkboard-user"></i>
+      </div>
+      <div class="menu-card-content">
+        <span class="menu-card-title">Evaluasi Tim Diklat</span>
+        <span class="menu-card-desc">Penilaian Tenaga Pengajar & Tim Penyelenggara</span>
+      </div>
+      <div class="menu-card-arrow">❯</div>
+    </div>
+
+    <div class="menu-card" onclick="bukaForm('sarpras')">
+      <div class="menu-card-icon">
+        <i class="fa-solid fa-building-wheat"></i>
+      </div>
+      <div class="menu-card-content">
+        <span class="menu-card-title">Evaluasi Sarana Prasarana</span>
+        <span class="menu-card-desc">Penilaian Asrama, Kelas, Konsumsi, & Wi-Fi</span>
+      </div>
+      <div class="menu-card-arrow">❯</div>
+    </div>
+
+  </div>
+
+  <form id="form-diklat" class="form-evaluasi formEvaluasiAjax">
+    <input type="hidden" name="jenis_evaluasi" value="Tim Diklat">
+
     <div class="form-section">
       <div class="form-group">
         <label>Nama Anda (Opsional)</label>
@@ -85,7 +143,7 @@
     </div>
 
     <div class="form-section">
-      <h3 class="section-title">A. Tenaga Pengajar</h3>
+      <h3 class="section-title"><i class="fa-solid fa-user-tie"></i> A. Tenaga Pengajar</h3>
       <div class="form-group"><label>1. Penguasaan Materi</label>
         <select class="form-control" name="a1" required><option value="">Pilih Nilai (1 - 4)</option><option value="4">4 - Sangat Baik</option><option value="3">3 - Baik</option><option value="2">2 - Cukup Baik</option><option value="1">1 - Kurang Baik</option></select>
       </div>
@@ -104,7 +162,7 @@
     </div>
 
     <div class="form-section">
-      <h3 class="section-title">B. Tim Penyelenggara</h3>
+      <h3 class="section-title"><i class="fa-solid fa-users-gear"></i> B. Tim Penyelenggara</h3>
       <div class="form-group"><label>1. Kejelasan Informasi Awal</label>
         <select class="form-control" name="b1" required><option value="">Pilih Nilai (1 - 4)</option><option value="4">4 - Sangat Baik</option><option value="3">3 - Baik</option><option value="2">2 - Cukup Baik</option><option value="1">1 - Kurang Baik</option></select>
       </div>
@@ -123,17 +181,42 @@
     </div>
 
     <div class="form-section">
-      <h3 class="section-title">C. Sarana Prasarana</h3>
-      <div class="form-group"><label>1. Ruang Kelas</label>
+      <h3 class="section-title"><i class="fa-solid fa-comment-dots"></i> Masukan untuk Tim</h3>
+      <div class="form-group">
+        <label>Kritik/Saran khusus Pengajar atau Panitia</label>
+        <textarea class="form-control" name="saran_tim" placeholder="Apa yang perlu diperbaiki dari kinerja tim?"></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-submit">Kirim Evaluasi Tim 🚀</button>
+  </form>
+
+  <form id="form-sarpras" class="form-evaluasi formEvaluasiAjax">
+    <input type="hidden" name="jenis_evaluasi" value="Sarana Prasarana">
+
+    <div class="form-section">
+      <div class="form-group">
+        <label>Nama Anda (Opsional)</label>
+        <input type="text" class="form-control" name="nama" placeholder="Boleh dikosongkan">
+      </div>
+      <div class="form-group">
+        <label>Nama Diklat / Angkatan *</label>
+        <input type="text" class="form-control" name="diklat" placeholder="Contoh: Latsar CPNS Angkatan IV" required>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3 class="section-title"><i class="fa-solid fa-hotel"></i> C. Sarana Prasarana</h3>
+      <div class="form-group"><label>1. Ruang Kelas (AC, Kursi, Proyektor)</label>
         <select class="form-control" name="c1" required><option value="">Pilih Nilai (1 - 4)</option><option value="4">4 - Sangat Baik</option><option value="3">3 - Baik</option><option value="2">2 - Cukup Baik</option><option value="1">1 - Kurang Baik</option></select>
       </div>
       <div class="form-group"><label>2. Asrama / Penginapan</label>
         <select class="form-control" name="c2" required><option value="">Pilih Nilai (1 - 4)</option><option value="4">4 - Sangat Baik</option><option value="3">3 - Baik</option><option value="2">2 - Cukup Baik</option><option value="1">1 - Kurang Baik</option></select>
       </div>
-      <div class="form-group"><label>3. Konsumsi</label>
+      <div class="form-group"><label>3. Konsumsi (Rasa, Variasi, Ketepatan)</label>
         <select class="form-control" name="c3" required><option value="">Pilih Nilai (1 - 4)</option><option value="4">4 - Sangat Baik</option><option value="3">3 - Baik</option><option value="2">2 - Cukup Baik</option><option value="1">1 - Kurang Baik</option></select>
       </div>
-      <div class="form-group"><label>4. Kebersihan Fasilitas</label>
+      <div class="form-group"><label>4. Kebersihan Fasilitas Toilet & Lingkungan</label>
         <select class="form-control" name="c4" required><option value="">Pilih Nilai (1 - 4)</option><option value="4">4 - Sangat Baik</option><option value="3">3 - Baik</option><option value="2">2 - Cukup Baik</option><option value="1">1 - Kurang Baik</option></select>
       </div>
       <div class="form-group"><label>5. Jaringan Internet (Wi-Fi)</label>
@@ -142,22 +225,14 @@
     </div>
 
     <div class="form-section">
-      <h3 class="section-title">D. Masukan & Saran</h3>
+      <h3 class="section-title"><i class="fa-solid fa-toolbox"></i> Masukan Fasilitas</h3>
       <div class="form-group">
-        <label>1. Kritik Utama Anda</label>
-        <textarea class="form-control" name="d1" placeholder="Apa yang paling mengecewakan/kurang?"></textarea>
-      </div>
-      <div class="form-group">
-        <label>2. Saran Perbaikan</label>
-        <textarea class="form-control" name="d2" placeholder="Apa yang perlu diperbaiki kedepannya?"></textarea>
-      </div>
-      <div class="form-group">
-        <label>3. Layanan yang perlu ditingkatkan</label>
-        <textarea class="form-control" name="d3" placeholder="Contoh: Menu makanan, kebersihan toilet, dsb."></textarea>
+        <label>Kritik/Saran khusus Sarana Prasarana</label>
+        <textarea class="form-control" name="saran_sarpras" placeholder="Contoh: Menu makanan kurang variasi, AC kelas panas, dsb."></textarea>
       </div>
     </div>
 
-    <button type="submit" class="btn-submit">Kirim Evaluasi 🚀</button>
+    <button type="submit" class="btn-submit">Kirim Evaluasi Sarpras 🚀</button>
   </form>
 
 </div>
@@ -168,27 +243,85 @@
 </div>
 
 <script>
-  // Script untuk menangkap Form (URL Google Apps Script akan dimasukkan nanti)
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzHzvxgkqQyLTvYi0lz4jKpQ1gYiKt6hCmQRsGVzfI4NUM3mKVCyoCZNtt_H0mVrMoO/exec'; 
-  const form = document.getElementById('formEvaluasi');
+  // URL Google Apps Script Anda (Tetap Sama)
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxiJufwb9j6GjgTwTapb1Vlv_TSznBGqnjPHtryCG6yA2ILUthO0vGBr4SHg9XHOquF/exec'; 
+  
   const loading = document.getElementById('loading');
+  const menuUtama = document.getElementById('evaluasi-menu');
+  const formDiklat = document.getElementById('form-diklat');
+  const formSarpras = document.getElementById('form-sarpras');
+  
+  const btnUtama = document.getElementById('back-to-main');
+  const btnMenu = document.getElementById('back-to-menu');
+  
+  const headerTitle = document.getElementById('header-title');
+  const headerDesc = document.getElementById('header-desc');
 
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    loading.style.display = 'flex'; // Munculkan loading
+  // --- LOGIKA TAMPILAN (NAVIGASI) ---
+
+  function bukaForm(jenis) {
+    // Sembunyikan Menu Pilihan
+    menuUtama.style.display = 'none';
+    btnUtama.style.display = 'none';
     
-    // Trik anti-cors agar tidak error saat dikirim
-    fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors' })
-      .then(() => {
-        loading.style.display = 'none';
-        alert("Terima kasih! Evaluasi Anda telah berhasil disimpan.");
-        form.reset(); // Kosongkan form setelah sukses
-        window.location.href = "index.html"; // Balik ke beranda
-      })
-      .catch(error => {
-        loading.style.display = 'none';
-        alert('Maaf, terjadi kesalahan saat mengirim evaluasi.');
-      });
+    // Munculkan Tombol Kembali ke Pilih Evaluasi
+    btnMenu.style.display = 'inline-flex';
+
+    if (jenis === 'diklat') {
+      formDiklat.style.display = 'block';
+      headerTitle.innerText = "Evaluasi Tim Diklat";
+      headerDesc.innerText = "Penilaian Tenaga Pengajar & Panitia Penyelenggara";
+    } else if (jenis === 'sarpras') {
+      formSarpras.style.display = 'block';
+      headerTitle.innerText = "Evaluasi Sarpras";
+      headerDesc.innerText = "Penilaian Fasilitas, Asrama, Konsumsi & Internet";
+    }
+    
+    // Scroll ke atas otomatis
+    window.scrollTo(0, 0);
+  }
+
+  function tampilkanMenu() {
+    // Sembunyikan semua form
+    formDiklat.style.display = 'none';
+    formSarpras.style.display = 'none';
+    btnMenu.style.display = 'none';
+    
+    // Munculkan Menu Utama
+    menuUtama.style.display = 'flex';
+    btnUtama.style.display = 'inline-flex';
+    
+    // Reset Header
+    headerTitle.innerText = "Survey & Evaluasi";
+    headerDesc.innerText = "Bantu kami meningkatkan kualitas layanan BBPK-APDN IV";
+    
+    window.scrollTo(0, 0);
+  }
+
+  // --- LOGIKA PENGIRIMAN DATA (AJAX) ---
+  
+  // Ambil semua form yang memiliki class 'formEvaluasiAjax'
+  const forms = document.querySelectorAll('.formEvaluasiAjax');
+
+  forms.forEach(form => {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      loading.style.display = 'flex'; // Munculkan loading
+      
+      // Ambil data dari form yang sedang di-submit
+      fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors' })
+        .then(() => {
+          loading.style.display = 'none';
+          alert("Terima kasih! Evaluasi Anda telah berhasil disimpan.");
+          form.reset(); // Kosongkan form setelah sukses
+          window.location.href = "index.html"; // Balik ke beranda
+        })
+        .catch(error => {
+          loading.style.display = 'none';
+          alert('Maaf, terjadi kesalahan saat mengirim evaluasi. Periksa koneksi internet Anda.');
+          console.error('Error!', error.message);
+        });
+    });
   });
 </script>
 
